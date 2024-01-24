@@ -1,0 +1,53 @@
+# application.yml
+--- 
+spring: 
+  application: 
+    name: order-service
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        instanceId: ${spring.application.name}-${spring.cloud.client.hostname}-${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 10s
+        healthCheckCriticalTimeout: 45s
+        queryPassing: true
+    loadbalancer:
+      ribbon.enabled: false
+
+  datasource:
+    url: jdbc:postgresql://order-service-db:5432/db
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+    open-in-view: false
+
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    bootstrap-servers: kafka:9092
+
+asw:
+  kafka:
+    channel:
+      order: order
+
+server:
+  port: ${PORT:${SERVER_PORT:0}}
+#  port: 8080
+#  port: 8081 
+  # per swagger dietro un api gateway 
+  forward-headers-strategy: framework
