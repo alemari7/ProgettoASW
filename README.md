@@ -61,6 +61,10 @@ Una validazione dell'ordine consiste di un order-id, alcuni dati dell'ordine (cl
 
 La cartella shell contiene gli scripts per lanciare e testare l'applicazione.
 
+## Preparing
+
+Prima di fare il build dell'applicazione e lanciarla, è necessario preparare l'applicazione con il comando `docker-compose`. Così facendo, viene avviato  Kafka e parte la shell per creare i topics di Kafka.  
+
 ## Build 
 
 Per fare il build dell'applicazione bisogna eseguire il seguente comando:
@@ -69,6 +73,6 @@ Per fare il build dell'applicazione bisogna eseguire il seguente comando:
 
 ## Execution
 
-Per lanciare l'applicazione bisogna eseguire il seguente comando:
+Per lanciare l'applicazione:
 
-* start *Docker* - `docker-compose up`
+* start *Docker* 
