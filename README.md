@@ -1,74 +1,74 @@
 # ASW-PROJECT-23-24
-Group project for [ASW](http://cabibbo.inf.uniroma3.it/asw/) (Software Systems Architectures) course.
+Porgetto per il corso di [ASW](http://cabibbo.inf.uniroma3.it/asw/) (Architetture dei sistemi sotware).
 
-Course held in the year 2023-2024 by professor [Luca Cabibbo](https://github.com/lucacabibbo) at Roma Tre University.
+Corso erogato nell'anno 2023-2024 dal professore [Luca Cabibbo](https://github.com/lucacabibbo) all'Università Roma Tre.
 
 ---
 
-### Languages and technologies
+### Linguaggi e Tecnologie utilizzate
 <img src="https://skillicons.dev/icons?i=java,gradle,spring,postgres,bash,docker,kafka">
 
 ---
-## Description
+## Descrizione
 
-This project contains the code for *OrderManager*, a simple microservice application for managing product orders.
+Questo progetto contiene il codice per l'applicazione *OrderManager*, una semplice applicazione a microservizi per gestire ordini di prodotti.
 
-The *OrderManager* application allows you to:
-* create products and change their available quantity (i.e., their inventory level);
-* create orders related to one or more products;
-* request validation of an order.
+L'applicazione *OrderManager* prevede di:
+* creare prodotti e modificare la quantità disponibile (stack level);
+* creare ordini relativi a uno o più prodotti;
+* richiedere la validazione di un ordine.
 
-An order is considered valid if the order exists, if all the products ordered exist
-and if the ordered quantities of each of the ordered products do not exceed the available quantities.
+Un ordine è considerato valido se innanzitutto esiste, se tutti i prodotti ordinati esistono e se le quantità ordinate di ognuno non superano la quantità disponibile.
 
 --- 
 
-The *OrderManager* application consists of the following microservices:
+L'applicazione *OrderManager* consiste dei seguenti microservizi:
 
-* *product-service* manages products.
-Each product has a name (which identifies it), category, quantity available, and unit price.
-
-  Operations:
-  * `POST /products` creates a new product (given name, category, quantity available and unit price, passed in the body of the request)
-  * `GET /products/{name}` finds a product, given the name
-  * `GET /products` finds all products
-  * `POST /findproducts/bynames` finds all products that have the name included in a list of names (the list of names is passed into the body of the request)
-  * `PATCH /products` updates the available quantity of a product (name data and quantity change, passed into the body of the request)
-
-
-* *order-service* handles orders.
-Each order has an id (which identifies it), the customer, the address, a set of order lines (each with product name and quantity), and the total.
-  Operations:
-  * `POST /orders` creates a new order (customer data, address, items ordered and total, passed in the body of the request)
-  * `GET /orders/{id}` finds an order (given the id).
-  * `GET /orders` finds all orders
-  * `GET /findorders/customer/{customer}` finds all orders for a customer (given the customer)
-  * `GET /findorders/product/{product}` finds all orders containing a certain product (given the product)
+* *product-service*: gestisce i prodotti.
+Ogni prodotto ha un nome (con il quale viene identificato), una categoria, un valore di quantità disponibile e un prezzo. 
+ 
+* Operazioni:
+  * `POST /products` crea un nuovo prodotto (nome, categoria, quantità disponibile e prezzo, passati nel corpo della richiesta)
+  * `GET /products/{name}` trova un prodotto, dato il nome
+  * `GET /products` trova tutti i prodotti
+  * `POST /findproducts/bynames` trova tutti i prodotti che hanno il nome incluso in una lista di nomi (la lista di nomi è passata nel corpo della richiesta)
+  * `PATCH /products` aggiorna la quantità disponibile di un prodotto. 
 
 
-* *order-validation-service* allows an order to be validated.
-An order validation (the outcome of a validation) consists of the order id, some order data (customer, products ordered), a validity indicator, and a reason.
-  Operations:
-  * `GET /ordervalidations/{id}` calculates and returns the validation of an order (given the id)
+* *order-service*: gestisce gli ordini.
+Ogni ordine ha un id (con il quale viene identificato), un cliente, un indirizzo, un insieme di linee d'ordine (ognuna con nome e quantità del prodotto) e un totale.
+
+* Operazioni:
+  * `POST /orders` crea un nuovo ordine (dati del cliente, indirizzo, elementi ordinati e totale, passati nel corpo della richiesta)
+  * `GET /orders/{id}` trova un ordine (dato l'id).
+  * `GET /orders` trova tutti gli ordini
+  * `GET /findorders/customer/{customer}` trova gli ordini di un certo cliente (dato il cliente)
+  * `GET /findorders/product/{product}` trova gli ordini contenenti un certo prodotto (dato il prodotto).
 
 
-* The *api-gateway* service (exposed on port *8080*) is the application gateway API that:
-  * exposes the *product-service* service on the path `/product-service` - for example, `GET /product-service/products`.
-  * exposes the *order-service* service on the `/order-service` path - for example, `GET /order-service/orders/{id}`
-  * exposes the *order-validation-service* on the `/order-validation-service` path - for example, `GET /order-validation-service/order-validations/{id}`
+* *order-validation-service* permette a un ordine di essere convalidato.
+Una validazione dell'ordine consiste di un order-id, alcuni dati dell'ordine (cliente, prodotti ordinati), un indicatore di validità e una motivazione.
+* Operazioni:
+  * `GET /ordervalidations/{id}` calcola e ritorna la validazione dell'ordine (dato l'id).
+
+
+* Il servizio *api-gateway* (esposto sulla porta *8080*) è l'application gateway API che:
+  * espone *product-service* sul percorso`/product-service` - per esempio, `GET /product-service/products`.
+  * espone *order-service* sul percorso `/order-service` - per esempio, `GET /order-service/orders/{id}`
+  * espone *order-validation-service* sul percorso `/order-validation-service` - per esempio, `GET /order-validation-service/order-validations/{id}`
 
 ---
 
-The shell folder contains scripts to run and test the application.
+La cartella shell contiene gli scripts per lanciare e testare l'applicazione.
 
 ## Build 
 
-To build this application:
+Per fare il build dell'applicazione bisogna eseguire il seguente comando:
 
-* run the `gradle build` command.
+*  `gradle build`
 
 ## Execution
 
-To run this application:
+Per lanciare l'applicazione bisogna eseguire il seguente comando:
 
-* start *Docker* on your machine.
+* start *Docker* - `docker-compose up`
