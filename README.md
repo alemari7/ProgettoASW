@@ -1,5 +1,5 @@
 # ASW-PROJECT-23-24
-Porgetto per il corso di [ASW](http://cabibbo.inf.uniroma3.it/asw/) (Architetture dei sistemi sotware).
+Progetto per il corso di [ASW](http://cabibbo.inf.uniroma3.it/asw/) (Architetture dei sistemi sotware).
 
 Corso erogato nell'anno 2023-2024 dal professore [Luca Cabibbo](https://github.com/lucacabibbo) all'Università Roma Tre.
 
@@ -11,14 +11,17 @@ Corso erogato nell'anno 2023-2024 dal professore [Luca Cabibbo](https://github.c
 ---
 ## Descrizione
 
-Questo progetto contiene il codice per l'applicazione *OrderManager*, una semplice applicazione a microservizi per gestire ordini di prodotti.
+Questo progetto contiene il codice dell'applicazione *OrderManager*, una semplice applicazione a microservizi per gestire ordini di prodotti.
 
 L'applicazione *OrderManager* prevede di:
 * creare prodotti e modificare la quantità disponibile (stack level);
 * creare ordini relativi a uno o più prodotti;
 * richiedere la validazione di un ordine.
 
-Un ordine è considerato valido se innanzitutto esiste, se tutti i prodotti ordinati esistono e se le quantità ordinate di ognuno non superano la quantità disponibile.
+Un ordine è considerato valido quando sono verificate queste condizioni:
+* esiste;
+* esistono tutti i prodotti ordinati;
+* le quantità ordinate di ciascun ordine non superano la quantità disponibile.
 
 --- 
 
@@ -63,7 +66,10 @@ La cartella shell contiene gli scripts per lanciare e testare l'applicazione.
 
 ## Preparing
 
-Prima di fare il build dell'applicazione e lanciarla, è necessario preparare l'applicazione con il comando `docker-compose`. Così facendo, viene avviato  Kafka e parte la shell per creare i topics di Kafka.  
+Oltre a fare il build dell'applicazione e far partire l'esecuzione, è necessario preparare l'applicazione con il comando `docker-compose up`. Così facendo viene avviato Kafka e tutti i vari servizi. 
+Una volta che Kafka è avviato, faccio partire la shell *create-kafka-topics.sh* per creare i topic "order" e "product". Inoltre all'avvio dell'applicazione è necessario creare i server su pgAdmin, 
+poichè eseguendo `docker-compose up` il database li crea ma non comunicano con pgAdmin. Quindi vanno creati manualmente poichè non è presente uno script che automatizza questo procedimento. 
+L'applicazione viene chiusa con il comando `docker-compose down`. Per un secondo riavvio dell'applicazione è necessario solamente il comando `docker-compose up`.
 
 ## Build 
 
